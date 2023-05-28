@@ -1,0 +1,104 @@
+{% extends 'ecomWeb/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container content-section mt-5" >
+	<div class="container d-flex justify-content-between p-0 m-0">
+		<h3>Occhila Profile</h3>
+		<a class="btn btn-secondary"> Edit Profile</a>
+	</div>
+	<hr>
+	<div class=" row d-flex mt-5">
+		<div class="col-md-4 dalign-items-center ">
+			<div class="personal-information ms-4">
+				<img src="{{user.profile.image.url}}" alt="profile-pic" width="100px" height="100px" class="rounded-circle">
+				<h5 class="account-heading ps-3 pt-2">{{ user.username }}</h5>
+				<p class="text-secondary">{{ user.email }}</p>
+			</div>
+
+			<nav>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item p-4"><a href="" id ="personalButtom">Personal Information</a></li>
+					<li class="list-group-item p-4"><a href="#" id="billingButton">Billing & Payments</a></li>
+					<li class="list-group-item p-4"><a href="#" id="orderButton">Order History</a></li>
+					<li class="list-group-item p-4"><a href="#" id="redeemButton">Redeem Coupon</a></li>
+				</ul>
+			</nav>
+
+		</div>
+		<div class="col-md-8 ps-4 " id="personal">
+			<h4>Personal Information</h4>
+			<p>Manage your personal information, including phone number and email address where you can be contacted.</p>
+			<div class="row d-flex justify-content-evenly mt-5">
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h4>Username</h4>
+					<p class="text-secondary">{{user.username}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h4>Email</h4>
+					<p class="text-secondary">{{user.email}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h4>Phone</h4>
+					<p class="text-secondary">{{user.profile.phone}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h4>Country</h4>
+					<p class="text-secondary">Nepal</p>
+				</div>
+			
+				
+			</div>
+
+		</div>
+		<div class="col-md-8 ps-4 " id="order">
+			<h4>Order History</h4>
+			<p>Manage and view your order history up to date.</p>
+			<div class="row mt-5">
+				<div class="card col-md-12 bg-light p-3 rounded mb-4">
+					<div class="header d-flex justify-content-between">
+						<h5>Order #1</h5>
+						<button class="btn btn-primary">Pending</button>
+					</div>
+					<small>Created At: 2012-20-23</small>
+					<hr style="background-color: black;">
+					<div class="product-detail d-flex justify-content-between m-0 pt-2">
+						<div class="product-name">
+							<h5>Product</h5>
+							<p>HP Monitor 145Hz</p>
+						</div>
+						<div class="product-price">
+							<h5>Price</h5>
+							<p>Rs. 45000</p>
+
+						</div>
+						<div class="product-quantity">
+							<h5>Quantity</h5>
+							<p>1</p>
+						</div>
+						<div class="product-total">
+							<h5>Total</h5>
+							<p>Rs. 45000</p>
+						</div>
+					</div>
+					
+				</div>
+
+			
+				
+			</div>
+
+		</div>
+		<div class="col-md-8" id="billing">
+			<h2>Payment</h2>
+		</div>
+		<div class="col-md-8" id="redeem">
+			<h2>Gift</h2>
+		</div>
+
+	</div>
+		
+</div>
+
+
+{% endblock %}

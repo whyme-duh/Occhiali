@@ -1,0 +1,53 @@
+{% load static %}
+{% load cart_tag %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{%static 'ecomWeb/style.css'%}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <div class="top-level">
+            <p>+977 9123812731821</p>
+            <p>Get Awesome Deals | Shop Now</p>
+            <p>Nep <img src="media/images/nepa.png" alt="icon" class="nep-icon"></p>
+        </div>
+        <div class="header-container">
+            <div class="brand-class">
+                <a href="{% url 'home'%}">GiG-Byte</a>
+            </div>
+            <div class="search-bar">
+                <nav>
+                    <a href="{% url 'category' %}"><button>Categories</button></a>
+                    <a href="#"><button>Featured Products</button></a>
+                    <a href="#"><button>Deals</button></a>
+                    <a href="#"><button>Best Seller</button></a>
+                </nav>
+            </div>
+            <input type="text" name="seach" placeholder="Search Anything.." >
+            
+            <div class="icons">
+
+                {% if user.is_authenticated %}
+                {%if request.session.cart|length%}
+                    <a href="{%url 'cart'%}" class="fa fa-shopping-cart"> Cart {{request.session.cart|length}}</a>
+                {% else %}
+                <a href="#" class="fa fa-shopping-cart"> Cart </a>
+                {% endif %}
+                <a href="{% url 'profile'%}" class="fa fa-user-o"> Account</a>
+                <a href="{% url 'logout'%}?next ={% url 'login' %}" class="fa fa-user-o"> Logout</a>
+                {% else %}
+                <a href="{% url 'cart'%}" class="fa fa-shopping-cart"> Cart </a>
+                
+                <a href="{% url 'register'%}" class="fa fa-user-o"> Register</a>
+                <a href="{% url 'login'%}" class="fa fa-user-o"> Login</a>
+                {% endif %}
+            </div>
+        </div>
+       
+    </header>
+</body>
+</html>

@@ -1,0 +1,159 @@
+{% extends 'ecomWeb/base.html' %}
+
+<title>{% block title%}Gig-Byte{% endblock %}</title>
+
+{% block content%}
+
+<div class="container">
+    <div class="img-slide">
+        <img src="media/images/pic.jpg" alt="">
+        <div class="img-overlay">
+            <h2>SHOP THE LATEST DEALS NOW</h2>
+            <button>Get Now</button>
+        </div>
+    </div>
+    <div class="featured">
+        <div class="featured-top-title">
+            <h2>Featured Products</h2>
+            <a href="#">See More</a>
+        </div>
+        <div class="featured-products">
+            
+            {% for product in products %}
+            <div class="single-product">
+                <a href="{% url 'product-detail' product.slug %}"><img src="{{product.upper_img.url}}" alt="img">
+                <div class="prod-title-price">
+                    <h4>{{product.name}}</h4>
+                </div>
+                <h4>Rs. {{product.price}}</h4>
+
+                <!-- <p>{{product.description|truncatewords:10}}</p> -->
+            </a>
+               
+                <a href="{% url 'cart-add' product.id %}">Add to Cart</a>
+            </div>
+
+            {% endfor %}
+            
+            
+        </div>
+
+    </div>
+    <div class="categories">
+        <h2>Categories</h2>
+        <div class="categories-list">
+            <div class="single-category">
+                <i class="fa fa-laptop"></i>
+                <h2>Laptops</h2>
+            </div>
+            <div class="single-category">
+                <i class="fa fa-mobile"></i>
+                <h2>Smartphones</h2>
+            </div>
+            <div class="single-category">
+                <i class="fa fa-camera"></i>
+                <h2>Camera</h2>
+            </div>
+            <div class="single-category">
+                <i class="fa fa-gamepad"></i>
+                <h2>Gaming</h2>
+            </div>
+            <div class="single-category">
+                <i class="fa fa-desktop"></i>
+                <h2>Desktop</h2>
+            </div>
+        </div>
+    </div>
+    <div class="hot-deals">
+        <h2>Hot Deals 🔥</h2>
+        <div class="featured-products">
+            
+            <div class="single-product">
+                <a href="./detail.html"><img src="media/images/desktop2.jpg" alt="img">
+                <div class="prod-title-price">
+                    <h4>HP Monitor 165Hz</h4>
+                    <h4>Rs. 45,000</h4>
+                </div>
+                <p>Built with aluminum, good for normal works</p>
+            </a>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i> 5
+                <button>Add to Cart</button>
+            </div>
+            
+            <div class="single-product">
+                <img src="media/images/desktop1.jpg" alt="img">
+                <div class="prod-title-price">
+                    <h4>HP Monitor 165Hz</h4>
+                    <h4>Rs. 45,000</h4>
+                </div>
+                <p>Built with aluminum, good for normal works</p>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i> 5
+                <button>Add to Cart</button>
+            </div>
+            <div class="single-product">
+                <img src="media/images/headphone.jpg" alt="img">
+                <div class="prod-title-price">
+                    <h4>HP Monitor 165Hz</h4>
+                    <h4>Rs. 45,000</h4>
+                </div>
+                <p>Built with aluminum, good for normal works</p>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i> 5
+                <button>Add to Cart</button>
+            </div>
+            <div class="single-product">
+                <img src="media/images/monitor.jpg" alt="img">
+                <div class="prod-title-price">
+                    <h4>HP Monitor 165Hz</h4>
+                    <h4>Rs. 45,000</h4>
+                </div>
+                <p>Built with aluminum, good for normal works</p>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i> 5
+                <button>Add to Cart</button>
+            </div>
+            
+        </div>
+
+    
+    </div>
+    
+</div>
+<div class="partners">
+    <div class="tech-icons">
+        <img src="media/images/etch/apple.png" alt="">
+        <img src="media/images/etch/samsung.png" alt="">
+        <img src="media/images/etch/hp.png" alt="">
+        <img src="media/images/etch/lenovo.png" alt="">
+        <img src="media/images/etch/dell.png" alt="">
+        <img src="media/images/etch/asus.png" alt="">
+    </div>
+</div>
+<div class="news-letter">
+    <div class="left-part">
+        <img src="media/images/message.png" alt="">
+        <div class="left-part-content">
+            <h3>Sign for our newsletter</h3>
+            <p>... and recive 20% discount in your first shopping.</p>
+        </div>
+    </div>
+    <div class="right-part">
+        <input type="email"> <button>Subscribe</button>
+    </div>
+</div>
+        
+{%endblock%}

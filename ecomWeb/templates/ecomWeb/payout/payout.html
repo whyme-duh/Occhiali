@@ -1,0 +1,97 @@
+{% extends 'ecomWeb/base.html' %}
+{% load widget_tweaks %}
+{% load cart_tag% }
+
+{% block content %}
+<div class="container d-flex justify-content-between mt-5">
+    <div class="col-md-7">
+        <h3>Billing Address</h3>
+        <form action="" method="POST" class="mt-4">
+            {% csrf_token %}
+            <!-- {{form}} -->
+            <!-- Email input -->
+            <div class="form-group d-flex justify-content-between">
+                <div class="form-outline mb-4 col-md-5">
+                    <label class="form-label " for="first_name">First Name</label> 
+                    {% render_field form.first_name class="form-control " placeholder="Enter First Name" type="text" %}
+              
+                </div>
+                <div class="form-outline mb-4 col-md-5">
+                    <label class="form-label" for="first_name">Last Name</label>
+                    {% render_field form.last_name class="form-control w-" placeholder="Enter Last Name" type="text" %}
+                </div>
+            </div>
+    
+         
+            
+           <div class="form-outline mb-4">
+            <label class="form-label" for="address 1">Address 1</label>
+            {% render_field form.address class="form-control" placeholder="Enter Address 1" type="text" %}
+            </div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="address 1">Address 2</label>
+                {% render_field form.address2 class="form-control" placeholder="Enter Address 2" type="text" %}
+            </div>
+            <button type= "submit" id="payment-button" class="btn btn-primary btn-lg w-100 btn-block">Pay With Khalti</button>
+
+        </form>
+        
+        <hr class="mt-5 mb-5 " >
+        <h3 >Pay with Card</h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+            <div class="form-group d-flex justify-content-between">
+                <div class="form-outline mb-4 col-md-5">
+                    <label class="form-label " for="name_on_card">Name on Card</label> 
+                    {% render_field paymentForm.name_on_card class="form-control " placeholder="Enter Name" type="text" %}
+              
+                </div>
+                <div class="form-outline mb-4 col-md-5">
+                    <label class="form-label" for="credit_card"> Credit Card Number</label>
+                    {% render_field paymentForm.credit_card_number class="form-control " placeholder="Enter Credit Number" type="text" %}
+                </div>
+            </div>
+            <div class="form-group d-flex ">
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Expiration</label>
+                    {% render_field paymentForm.expiration class="form-control" placeholder="Expiration" type="date " %}
+      
+                  </div>
+                  <div class="form-outline mb-4 ps-4">
+                    <label class="form-label" for="address 1">CVV</label>
+                    {% render_field paymentForm.cvv class="form-control" placeholder="Enter  CVV" type="text" %}
+                    </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg w-100 btn-block">Complete Payment</button>
+
+            </form>
+    
+           
+            
+            
+
+       
+
+
+
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center">Your cart</h3>
+        {% for key,value in request.session.cart.items%}
+            <div class="container d-flex justify-content-start border rounded p-2">
+                <img src="{{value.image}}" alt="" width="50" height="50">
+                <div class="card-detail ps-5">
+                    <h5>{{value.name}}</h5>
+                    <p>Rs. {{value.price}}</p>
+                </div>
+            </div>
+            
+        {% endfor %}
+        <div class="container border rounded p-3">
+            <h5>Total : Rs. </h5>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
