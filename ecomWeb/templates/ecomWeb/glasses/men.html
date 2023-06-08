@@ -1,0 +1,54 @@
+{% extends 'ecomWeb/base.html' %}
+{% block title%} Sunglaseses{% endblock %}
+
+{% block content %}  
+    <div class="d-navbar">
+        <div class="types">
+            <a href="{% url 'sunglasses' %}" >All</a>
+            <a href="{% url 'men-sunglasses' %}" id="active">Men</a>
+            <a href="{% url 'women-sunglasses' %}">Women</a>
+
+            <!-- <a href="#">Kids</a> -->
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Sort By
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Price: Low to High</a>
+                <a href="#">Newest</a>
+                <a href="#">Best sellers</a>
+            </div>
+        </div> 
+    </div>
+    <div class="main">
+          
+            <div class="main2">
+                
+                {% for product in products %}
+                <a href="{% url 'product-detail' product.slug%}">
+                    <div class="one" >
+                        <img src="{{product.upper_img}}">
+                        <div class="details">
+                            <p>{{product.brand}}</p>
+                            <h5>{{product.name}}</h5>
+                            <p>Rs. {{product.price }}</p>
+                        </div>
+                    </a>
+                        <div class="buttonGroup">
+                            <button id="cart-sunglass">
+                                Add To Cart
+                            </button>
+                            
+                        </div>
+                    </div>
+
+                {% endfor %}
+              
+              
+            </div>
+            <div class="more">
+                <a href="#"><h5><center>Show more</center></h5></a> 
+            </div>
+    </div>
+{% endblock %}

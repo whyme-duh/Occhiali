@@ -1,97 +1,98 @@
-{% extends 'ecomWeb/base.html' %}
-{% block content%}
-   
-<div class="whole container-fluid">
-    <div class="detailPage">
-        <div class="detailsPhoto">
-            <div class="photoPerson">
-                <img src="https://assets.glasses.com/is/image/Glasses/713132581124_GL_shad_omfr.png?impolicy=GL_parameters_transp_clone1440">
-            </div>
-            <div class="Photoglass">
-                <img src="https://assets.glasses.com/is/image/Glasses/713132581124__STD__shad__fr.png?impolicy=GL_parameters_transp_clone1440">
-                <div class="space">
+    {% extends 'ecomWeb/base.html' %}
+    {% block content%}
+    
+    <div class=" container">
+        <div class="detailPage">
+            <div class="detailsPhoto">
+                <div class="photoPerson">
+                    <img src="{{object.people_img}}" alt="">
                 </div>
-                <img src="https://assets.glasses.com/is/image/Glasses/713132581124__STD__shad__lt.png?impolicy=GL_parameters_transp_clone1440"> 
-            </div>
-        </div>
-        <div class="detailsGlass">
-            <ul>
-                <li><b>{{object.brand}}</b></li>
-                <li>{{object.name}}</li>
-            </ul>
-            <hr>
-            <div class="size">
-                <p> Size: {{object.size}}</p>
-                <div class="colors">
-                    <p>Colors available : </p>
-                    <button style="background-color: black; padding: 16px;border: none;"></button>
-                    <button style="background-color: brown;padding: 16px;border: none;"></button>
-                </div> 
-            </div>  
-            <hr>
-            <div class="price">
-                <p>Total : Rs.{{object.price}}</p>
-                <div class="buttonGroup1">
-                    <button id="cart">
-                        Add to cart
-                    </button>
-                    <button id="buynow">
-                        Buy now
-                    </button>
+                <div class="Photoglass">
+                    <img src="{{object.lower_image}}" alt="">
+                    <div class="space">
+                    </div>
+                    <img src="{{object.upper_img}}" alt="">
                 </div>
             </div>
-            <div class="shipping">
-                <p>FREE SHIPPING AVAILABLE!!</p>
+            <div class="detailsGlass">
+                <div class="detailName">
+                    <p>{{object.brand}}</p>
+                    <h5>{{object.name}}</h5>
+                </div>
+                <hr>
+                <div class="size">
+                    <p> Size: <span class="product-size">{{object.size}}</span></p>
+                    <div class="colors">
+                        <p>Colors available : </p>
+                        <button style="background-color: black; padding: 16px;border: none;"></button>
+                        <button style="background-color: brown;padding: 16px;border: none;"></button>
+                    </div> 
+                </div>  
+                <hr>
+                <div class="price">
+                    <p>Total : Rs.{{object.price}}</p>
+                    <div class="buttonGroup1">
+                        <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart">
+                            Add to cart
+                        </button></a>
+                        
+                        <button id="d-buynow">
+                            Buy now
+                        </button>
+                    </div>
+                </div>
+                <div class="shipping">
+                    <p>FREE SHIPPING AVAILABLE!!</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="aboutProduct">
-        <h2><b>About this product</b></h2>
-        <div class="aboutDetail">
-            <div class="a1">
-                <ul>
-                    <li><b>FRAME COLOR:</b></li>
-                    <li>{{object.frame_color}}</li>
-                </ul>
+        <div class="aboutProduct">
+            <h2><b>About this product</b></h2>
+            <div class="aboutDetail">
+                <div class="a1">
+                    <ul>
+                        <li><b>FRAME COLOR:</b></li>
+                        <li>{{object.frame_color}}</li>
+                    </ul>
+                </div>
+                <div class="a1">
+                    <ul>
+                        <li><b>FRAME MATERIAL:</b></li>
+                        <li>{{object.frame_material}}</li>
+                    </ul>
+                </div>
+                <div class="a1">
+                    <ul>
+                        <li><b>LENS TREATMENT:</b></li>
+                        <li>{{object.frame_treatment}}</li>
+                    </ul>
+                </div>
             </div>
-            <div class="a1">
-                <ul>
-                    <li><b>FRAME MATERIAL:</b></li>
-                    <li>{{object.frame_material}}</li>
-                </ul>
-            </div>
-            <div class="a1">
-                <ul>
-                    <li><b>LENS TREATMENT:</b></li>
-                    <li>{{object.frame_treatment}}</li>
-                </ul>
+            <div class="aboutDetail1">
+                <div class="a1">
+                    <ul>
+                        <li><b>FRAME SHAPE:</b></li>
+                        <li>{{object.frame_shape}}</li>
+                    </ul>
+                </div>
+                <div class="a1">
+                    <ul>
+                        <li><b>LENS COLOR:</b></li>
+                        <li>{{object.lens_color}}</li>
+                    </ul>
+                </div>
+                <div class="a1">
+                    <ul>
+                        <li><b>GENDER:</b></li>
+                        <li>{{object.gender}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="aboutDetail1">
-            <div class="a1">
-                <ul>
-                    <li><b>FRAME SHAPE:</b></li>
-                    <li>{{object.frame_shape}}</li>
-                </ul>
-            </div>
-            <div class="a1">
-                <ul>
-                    <li><b>LENS COLOR:</b></li>
-                    <li>{{object.lens_color}}</li>
-                </ul>
-            </div>
-            <div class="a1">
-                <ul>
-                    <li><b>GENDER:</b></li>
-                    <li>{{object.gender}}</li>
-                </ul>
-            </div>
+        <hr id="longline">
+        <div class="desc">
+            <h2><b>Description:</b></h3>
+                <p>{{object.description}}</p>
         </div>
     </div>
-    <hr id="longline">
-    <div class="desc">
-        <h2><b>Description:</b></h3>
-            <p>{{object.description}}</p>
-    </div>
-</div>
-{% endblock %}
+    {% endblock %}

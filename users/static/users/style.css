@@ -1,0 +1,9 @@
+#form, #close{
+    display: none;
+}
+
+.billing-card{
+    background-color: rgb(249, 245, 245);
+    border-radius: 20px;
+    padding: 1em;
+}

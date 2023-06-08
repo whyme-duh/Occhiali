@@ -1,0 +1,71 @@
+{% extends 'ecomWeb/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container content-section mt-5 pb-5" >
+	<div class="container d-flex justify-content-between p-0 m-0">
+		<h3>Occhila Profile</h3>
+		<a class="btn btn-secondary" href="{% url 'edit-profile' %}"> Edit Profile</a>
+	</div>
+	<hr>
+	<div class=" row d-flex mt-5">
+		<div class="col-md-4 dalign-items-center ">
+			<div class="personal-information ms-4">
+				<img src="{{user.profile.image.url}}" alt="profile-pic" width="100px" height="100px" class="rounded-circle">
+				<h5 class="account-heading ps-3 pt-2">{{ user.username }}</h5>
+				<p class="text-secondary">{{ user.email }}</p>
+			</div>
+
+			<nav>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item p-4"><a href="{% url 'profile' %}" style="font-weight:bold;">Personal Information</a></li>
+					<li class="list-group-item p-4"><a href="{% url 'billing' %}">Billing & Payments</a></li>
+					<li class="list-group-item p-4"><a href="{% url 'myorder' %}" >Order History</a></li>
+					<li class="list-group-item p-4"><a href="#" >Redeem Coupon</a></li>
+				</ul>
+			</nav>
+
+		</div>
+		<div class="col-md-8 ps-4 " id="personal">
+			<h4>Personal Information</h4>
+			<p>Manage your personal information, including phone number and email address where you can be contacted.</p>
+			<div class="row d-flex justify-content-evenly mt-5">
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>Username</h5>
+					<p class="text-secondary">{{user.username}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>Email</h5>
+					<p class="text-secondary">{{user.email}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>First Name</h5>
+					<p class="text-secondary">{{user.first_name}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>Last Name</h5>
+					<p class="text-secondary">{{user.last_name}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>Phone</h5>
+					<p class="text-secondary">{{user.profile.phone}}</p>
+				</div>
+				<div class="card col-md-5 bg-light p-3 rounded mb-4">
+					<h5>Country</h5>
+					<p class="text-secondary">Nepal</p>
+				</div>
+			
+				
+			</div>
+
+		</div>
+		
+
+		
+		
+	</div>
+		
+</div>
+
+
+{% endblock %}

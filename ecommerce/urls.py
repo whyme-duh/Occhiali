@@ -27,7 +27,10 @@ urlpatterns = [
     path('login/',auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),
     path('logout/',auth_views.LogoutView.as_view(template_name = 'users/register.html'), name = 'logout'),
     path('profile/', user_views.profile, name = 'profile'),
-    path('register/', user_views.register, name = 'register')
+    path('profile/billing', user_views.billing, name = 'billing'),
+    path('register/', user_views.register, name = 'register'),
+    path('edit-profile/', user_views.editprofile, name = 'edit-profile'),
+    path('myorder/', user_views.myorder, name = 'myorder')
 ]
 
 if settings.DEBUG:

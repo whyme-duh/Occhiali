@@ -5,67 +5,65 @@
 {% block content %}
 <div class="container d-flex justify-content-between mt-5">
     <div class="col-md-7">
-        <h3>Billing Address</h3>
-        <form action="" method="POST" class="mt-4">
-            {% csrf_token %}
-            <!-- {{form}} -->
-            <!-- Email input -->
-            <div class="form-group d-flex justify-content-between">
-                <div class="form-outline mb-4 col-md-5">
-                    <label class="form-label " for="first_name">First Name</label> 
-                    {% render_field form.first_name class="form-control " placeholder="Enter First Name" type="text" %}
-              
-                </div>
-                <div class="form-outline mb-4 col-md-5">
-                    <label class="form-label" for="first_name">Last Name</label>
-                    {% render_field form.last_name class="form-control w-" placeholder="Enter Last Name" type="text" %}
-                </div>
-            </div>
-    
-         
-            
-           <div class="form-outline mb-4">
-            <label class="form-label" for="address 1">Address 1</label>
-            {% render_field form.address class="form-control" placeholder="Enter Address 1" type="text" %}
-            </div>
-
-            <div class="form-outline mb-4">
-                <label class="form-label" for="address 1">Address 2</label>
-                {% render_field form.address2 class="form-control" placeholder="Enter Address 2" type="text" %}
-            </div>
-            <button type= "submit" id="payment-button" class="btn btn-primary btn-lg w-100 btn-block">Pay With Khalti</button>
-
-        </form>
-        
-        <hr class="mt-5 mb-5 " >
-        <h3 >Pay with Card</h3>
-            <form action="" method="POST">
-                {% csrf_token %}
-            <div class="form-group d-flex justify-content-between">
-                <div class="form-outline mb-4 col-md-5">
-                    <label class="form-label " for="name_on_card">Name on Card</label> 
-                    {% render_field paymentForm.name_on_card class="form-control " placeholder="Enter Name" type="text" %}
-              
-                </div>
-                <div class="form-outline mb-4 col-md-5">
-                    <label class="form-label" for="credit_card"> Credit Card Number</label>
-                    {% render_field paymentForm.credit_card_number class="form-control " placeholder="Enter Credit Number" type="text" %}
-                </div>
-            </div>
-            <div class="form-group d-flex ">
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Expiration</label>
-                    {% render_field paymentForm.expiration class="form-control" placeholder="Expiration" type="date " %}
-      
-                  </div>
-                  <div class="form-outline mb-4 ps-4">
-                    <label class="form-label" for="address 1">CVV</label>
-                    {% render_field paymentForm.cvv class="form-control" placeholder="Enter  CVV" type="text" %}
+        <h3>Your Billing Address</h3>
+        {% for object in billing %}
+            {% if object.user == user %}
+           
+            <div class="row d-flex  mt-5 pt-2">
+                <div class="billing-card col-md-8 p-3">
+                    <div class="header d-flex justify-content-between align-items-center pb-3">
+                        <h5><b>Billing Address {{object.id}}</b> </h5>
+                            
                     </div>
-            </div>
-            <button type="submit" class="btn btn-success btn-lg w-100 btn-block">Complete Payment</button>
+                    <h5><b>Name</b> : {{object.first_name}} {{object.last_name}}</h5>
+                    <h5><b>Phone</b> : {{object.phone}}</h5>
+                    <h5><b>Address (1)</b> : {{object.address1}}</h5>
+                    <h5><b>Address (2)</b> : {{object.address2}}</h5>
+                                            
+                    
 
+                </div>
+            </div>
+            <a href="{% url 'create-order' }">
+            <button type= "submit" id="payment-button" class="btn  p-3 mt-5 " style="background-color:#572B8A;color:white;">Pay With Khalti</button>
+
+            </a>
+            {% else %}
+
+            <form action="" method="POST" class="mt-4">
+                {% csrf_token %}
+                <!-- {{form}} -->
+                <!-- Email input -->
+                <div class="form-group d-flex justify-content-between">
+                    <div class="form-outline mb-4 col-md-5">
+                        <label class="form-label " for="first_name">First Name</label> 
+                        {% render_field form.first_name class="form-control " placeholder="Enter First Name" type="text" %}
+                  
+                    </div>
+                    <div class="form-outline mb-4 col-md-5">
+                        <label class="form-label" for="first_name">Last Name</label>
+                        {% render_field form.last_name class="form-control w-" placeholder="Enter Last Name" type="text" %}
+                    </div>
+                </div>
+        
+             
+                
+               <div class="form-outline mb-4">
+                <label class="form-label" for="address 1">Address 1</label>
+                {% render_field form.address class="form-control" placeholder="Enter Address 1" type="text" %}
+                </div>
+    
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="address 1">Address 2</label>
+                    {% render_field form.address2 class="form-control" placeholder="Enter Address 2" type="text" %}
+                </div>
+                <button type= "submit" id="payment-button" class="btn btn-primary btn-lg w-100 btn-block">Pay With Khalti</button>
+    
             </form>
+            
+            {% endif %}
+        {% endfor%}
+
     
            
             
@@ -78,20 +76,56 @@
     </div>
     <div class="col-md-4">
         <h3 class="text-center">Your cart</h3>
-        {% for key,value in request.session.cart.items%}
+        {% for value in carts %}
             <div class="container d-flex justify-content-start border rounded p-2">
-                <img src="{{value.image}}" alt="" width="50" height="50">
+                <img src="{{value.product.upper_img.url}}" alt="" width="50" height="50">
                 <div class="card-detail ps-5">
-                    <h5>{{value.name}}</h5>
-                    <p>Rs. {{value.price}}</p>
+                    <h5>{{value.product.name}}</h5>
+                    <p>Rs. {{value.product.price}}</p>
                 </div>
             </div>
             
         {% endfor %}
         <div class="container border rounded p-3">
-            <h5>Total : Rs. </h5>
+            <h5>Total : Rs. {{carts.get_cart_total}}</h5>
         </div>
         
     </div>
+    
 </div>
+<script>
+    var config = {
+        // replace the publicKey with yours
+        "publicKey": "test_public_key_93c03d427fc84712a7e39b6bd61d7e23",
+        "productIdentity": "1234567890",
+        "productName": "Dragon",
+        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+        "paymentPreference": [
+            "KHALTI",
+            "EBANKING",
+            "MOBILE_BANKING",
+            "CONNECT_IPS",
+            "SCT",
+            ],
+        "eventHandler": {
+            onSuccess (payload) {
+                // hit merchant api for initiating verfication
+                console.log(payload);
+            },
+            onError (error) {
+                console.log(error);
+            },
+            onClose () {
+                console.log('widget is closing');
+            }
+        }
+    };
+
+    var checkout = new KhaltiCheckout(config);
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function () {
+        // minimum transaction amount must be 10, i.e 1000 in paisa.
+        checkout.show({amount: 1000});
+    }
+    </script>
 {% endblock %}

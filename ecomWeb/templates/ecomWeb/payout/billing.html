@@ -1,0 +1,33 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<form action="" method="POST" class="mt-4">
+    {% csrf_token %}
+    <!-- {{form}} -->
+    <!-- Email input -->
+    <div class="form-group d-flex justify-content-between">
+        <div class="form-outline mb-4 col-md-5">
+            <label class="form-label " for="first_name">First Name</label> 
+            {% render_field form.first_name class="form-control " placeholder="Enter First Name" type="text" %}
+      
+        </div>
+        <div class="form-outline mb-4 col-md-5">
+            <label class="form-label" for="first_name">Last Name</label>
+            {% render_field form.last_name class="form-control w-" placeholder="Enter Last Name" type="text" %}
+        </div>
+    </div>
+
+ 
+    
+   <div class="form-outline mb-4">
+    <label class="form-label" for="address 1">Address 1</label>
+    {% render_field form.address class="form-control" placeholder="Enter Address 1" type="text" %}
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="address 1">Address 2</label>
+        {% render_field form.address2 class="form-control" placeholder="Enter Address 2" type="text" %}
+    </div>
+    <button type= "submit" id="payment-button" class="btn btn-primary btn-lg w-100 btn-block">Pay With Khalti</button>
+
+</form>

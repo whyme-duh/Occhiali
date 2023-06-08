@@ -6,27 +6,30 @@
 {% block content %}
 
 
-<section class="h-100" style="background-color: #eee;">
+{% if carts%}
+
+<section  style="background-color: #eee;height: 90vh;">
     <div class="container h-100 py-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-10">
+      <div class="row d-flex justify-content-center h-100">
+        <div class="col-8">
   
+          
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+            <a href="{% url 'delete-cart'%}" class="btn btn-danger">Delete <i class="fa fa-trash-o"></i></a>
           
           </div>
-          {% for key,value in request.session.cart.items%}
-  
+          {% for value in carts %}
           <div class="card rounded-3 mb-4">
             <div class="card-body p-4">
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-2 col-lg-2 col-xl-2">
                   <img
-                    src="{{value.image}}"
-                    class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    src="{{value.product.upper_img}}"
+                    class="img-fluid rounded-3" alt="#">
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
-                  <p class="lead fw-normal mb-2">{{value.name}}</p>
+                  <p class="lead fw-normal mb-2">{{value.product.name}}</p>
                   <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -36,7 +39,7 @@
                   </button>
   
                   <input id="form1" min="0" name="quantity" value="2" type="number"
-                    class="form-control form-control-sm" />
+                    class="form-control form-control-sm"  />
   
                   <button class="btn btn-link px-2"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
@@ -44,39 +47,43 @@
                   </button>
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                  <h5 class="mb-0">Rs. {{value.price}}</h5>
+                  <h5 class="mb-0">Rs. {{value.product.price}}</h5>
                 </div>
                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+
+                  <a href="{% url 'remove-cart' value.id %}"><i class="fa fa-trash-o" style="font-size:20px;color:red;" ></i></a>
+
                 </div>
               </div>
             </div>
           </div>
           {% endfor %}
+
+          <div class="card">
+            <a class="btn btn-success btn-block btn-lg" href="{% url 'payout' %}">Proceed to Pay</a>
+        </div>
+         
           
   
-          <div class="card mb-4">
-            <div class="card-body p-4 d-flex flex-row">
-              <div class="form-outline flex-fill">
-                <form action="#" method="POST" novalidate class="d-flex">
-                  {% csrf_token %}
-                  {% render_field form.code class="form-control" placeholder="Enter Your Coupon" type="text" %}
-                  <button type="submit" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
-                  
-                </form>
-              </div>
-            </div>
-          </div>
+          
   
-          <div class="card">
-            <div class="card-body">
-              <a class="btn btn-warning btn-block btn-lg" href="{% url 'payout' %}">Proceed to Pay</a>
-            </div>
-          </div>
+          
   
         </div>
+       
       </div>
     </div>
   </section>
-  
+  {% else %}
+
+  <div class="container mt-5 pt-5 d-flex justify-content-center flex-column align-items-center">
+    <img src="/media/images/cart.png" alt="" width="100" height="100">
+    <div class="content pt-5 d-flex flex-column justify-content-center align-items-center">
+      <h2>Your Cart Is <span style="color:red;">Empty</span></h2>
+      <p>Must add the items to cart before you proceed to checkout. </p>
+      <a href="{% url 'home' %}" class="btn btn-warning mt-3 ">Go Back Shopping</a>
+    </div>
+  </div>
+  {% endif %}
 
 {% endblock %}
