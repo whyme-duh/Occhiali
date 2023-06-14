@@ -35,6 +35,19 @@
 // });
 
 
+setTimeout(()=>{
+    const message = document.getElementById('alert');
+
+    message.style.display= "none";  
+}, 2000)
+
+// order style
+
+const angledown = document.getElementById('down');
+angledown.addEventListener('click', ()=>{
+    document.getElementById('product-detail').style.display = "block";
+})
+
 var addForm = document.getElementById('addForm');
 var closeBtn = document.getElementById('close')
 

@@ -178,6 +178,7 @@ hr{
     letter-spacing: 2px;
     line-height: 2;
 }
+
 #d-cart{
     padding: 15px;
     letter-spacing: 2px;
@@ -188,7 +189,7 @@ hr{
     border-radius: 5px;
 }
 #d-cart:hover{
-    background-color: rgb(41, 39, 39);
+    background-color: rgb(211, 207, 207);
 }
 #d-buynow{
     padding: 15px;
@@ -430,3 +431,13 @@ strike{
     padding-right: 40px;
 }
 
+/* related product */
+
+.d-related-products{
+    font-size: 8em;
+    color: rgb(200, 230, 240);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.d-product-list{
+    gap: 3em;
+}

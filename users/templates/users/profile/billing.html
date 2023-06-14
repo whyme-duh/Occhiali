@@ -3,7 +3,10 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="container content-section mt-5" >
-
+    <div class="container d-flex justify-content-between p-0 m-0">
+		<h3>Occhila Profile</h3>
+	</div>
+	<hr>
 	<div class=" row d-flex mt-5">
 		<div class="col-md-4 dalign-items-center ">
 			<div class="personal-information ms-4">
@@ -35,7 +38,7 @@
             {% for object in billing %}
                 {% if object.user == user%}
                 <div class="row d-flex  mt-5 pt-2">
-                    <div class="billing-card col-md-8 p-3">
+                    <div class="billing-card col-md-12 p-3">
                         <div class="header d-flex justify-content-between align-items-center pb-3">
                             <h5><b>Billing Address {{object.id}}</b> </h5>
                             <div class="icons-group">
@@ -45,8 +48,7 @@
                         </div>
                         <h5><b>Name</b> : {{object.first_name}} {{object.last_name}}</h5>
                         <h5><b>Phone</b> : {{object.phone}}</h5>
-                        <h5><b>Address (1)</b> : {{object.address1}}</h5>
-                        <h5><b>Address (2)</b> : {{object.address2}}</h5>
+                        <h5><b>Address</b> : {{object.address1}}</h5>
                                                 
                         
     

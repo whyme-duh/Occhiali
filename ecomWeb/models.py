@@ -1,6 +1,8 @@
 from django.db import models
 from PIL import Image
+from django.contrib.auth.models import User
 import datetime
+from phone_field import PhoneField
 
 
 
@@ -41,6 +43,7 @@ class Product(models.Model):
     lower_image = models.URLField(null=True, blank=False)
     brand = models.CharField(max_length=80, null=True)
     price = models.IntegerField()
+    color = models.Choices
     frame_color = models.CharField(max_length=100, null=True)
     frame_material = models.CharField(max_length=100, null=True)
     frame_treatment = models.CharField(max_length=100, null=True)
@@ -61,9 +64,65 @@ class Product(models.Model):
 
 
 
-  
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_paid = models.BooleanField(default = False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null = True)
+    order_date = models.DateField(default = datetime.datetime.today)
+
+    def __str__(self):
+        return self.is_paid
+    
+    def get_cart_total(self):
+        cart_items = self.cart_items.all()
+        price = []
+        for cart_item in cart_items:
+            price.append(cart_item.product.price)
+        return sum(price)
+   
     
 
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null = True, blank=True)
+
+
+    def get_price(self):
+        price = [self.product.price]
+        return sum(price)
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default = True )
+    fname = models.CharField(max_length=80, null = False)
+    lname = models.CharField(max_length=80, null = False)
+    address = models.CharField(max_length=100, null= False)
+    phone = PhoneField(blank=False)
+    total_price =models.FloatField(null = False)
+    payment_id = models.CharField(max_length = 250, null = True)
+    order_status = (
+        ("Pending ", "Pending"),
+        ("Out for Shipping" , "Out for Shipping"),
+        ("Delivered", "Delivered")
+    )
+    status = models.CharField(max_length=100, choices=order_status, default="Pending", null= False)
+    message = models.TextField(null = True)
+    tracking_no = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    payment_completed = models.BooleanField(default=False) 
+
+
+    def __str__(self):
+        return ' {} -{}'.format(self.id, self.tracking_no)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.FloatField(null = False)
+    
+    def __str__(self):
+        return f'{self.order}'
+    
 
 
 

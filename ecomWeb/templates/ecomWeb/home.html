@@ -31,35 +31,52 @@
                 <ul >
                     <li><a class="menu-link" href="{% url 'sunglasses'%}">Sunglasses</a></li>
                     <li><a class="menu-link" href="{% url 'eyeglasses' %}">Eyeglasses</a></li>
-                    <li><a class="menu-link" href="#">Offers</a></li>
-                    <li><a class="menu-link" href="#">Services</a></li>
+                    <li><a class="menu-link" href="#offer">Offers</a></li>
+                    <li><a class="menu-link" href="{%url 'services' %}">Services</a></li>
                     
                 </ul>
                 <ul>
-                    <li><a href="{% url 'cart' %}"> <i class="fa fa-shopping-cart"></i> Cart</a></li>
+                    <li style="position:relative;"><a href="{% url 'cart' %}"> <i class="fa fa-shopping-cart" style="font-size:20px ;" ></i>{% if request.user.profile.get_cart_count > 0 %}  <span class="cart-counter">{{request.user.profile.get_cart_count}} </span>{%   endif %} Cart </a></li>
+                    {% if user.is_authenticated %}
+                    <li >
+                        <a href="{% url 'profile' %}" style="color:white;">
+                            
+                            <i class="fa fa-user-o"></i> Profile
+                        </a>
+                    </li>
+                   
+                    {% else %}
                     <li >
                         <a href="{% url 'login' %}" style="color:white;">
                             
                             <i class="fa fa-user-o"></i> Login
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
+
     
     
-        <div class="hero-text">
-            <span ></span><p class="s-hero-text-heading"><span >Occhiali</span>  : Blah<br>Blah</p>
+        <div class="s-hero-text">
+            <span ></span><p class="s-hero-text-heading"><span >Occhiali</span>  : Style meets Clarity. </p>
     
-            <p class="s-hero-text-desc">"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia maiores tempora exercitationem fuga voluptate, error vel ut quae repellendus sint iste possimus, sed, enim quas beatae quam laudantium! Ipsa, totam."" —Sup</p>
+            <p class="s-hero-text-desc">
+                Experience crystal-clear vision and elevate your style with our wide range of spectacles - Shop now and see the world in a whole new way!</p>
+            <div class="s-btn-group mt-3">
+                <a href="{% url 'sunglasses'%}" class="btn" id="s-shop">Start with Sunglasses </a>
+                <a href="#featured" class="btn" id="s-featured">Featured Products</a>
+
+            </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id="offer">
         <div class="row">
-            <div class="col-md-4">
-                <h1 class="s-offer">offers</h1>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                <a href="#" ><button type="button" style="margin:50px ;" class="btn btn-primary">See offers</button></a>
+            <div class="col-md-6">
+                <h1 class="s-offer">Offers</h1>
+                <p>Grab 50% off in our latest products.</p>
+                <a href="{% url 'offers'%}" ><button type="button" class="btn  mt-3" id="s-shop">See offers</button></a>
             </div>
             <div class="col-md-6">
                 <img src="media/assets/model.jpg" alt="">
@@ -70,10 +87,10 @@
     
         </div>
     </div>
-    <section class="s-glass-section pb-5">
+    <section class="s-glass-section pb-5 " id="featured">
         <div class="container">
-            <h1>Featured Products</h1>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt incidunt, error iste perspiciatis architecto vitae explicabo illo ipsa vero accusamus pariatur aut quas sequi natus hic dolore asperiores eum cum!</p>
+            <h1>Collections</h1>
+            <p>Explore Our Curated Selection of Spectacles for Every Look and Lifestyle</p>
             <div class="row s-glass-show">
                 {% for product in products|slice:4 %}
                 <div class="col-md-3">
@@ -95,18 +112,20 @@
     </section>
     <footer>
         <div class="container">
-            <div class="row ">
+            <div class="row d-flex justify-content-between">
                 <div class="col-md-4">
                     <h1>Occhiali</h1>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.  </p>
+                    <p>Experience crystal-clear vision and elevate your style with our wide range of spectacles.</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    <h3>Contact Us</h3>
                     
-                    <ul>
-                        <h5>Contact Us</h5>
-                        <li>lorem</li>
-                        <li>lorem</li>
-                        <li>lorem</li>
+                    <ul class="m-0 p-0">
+                        <li><a href="{% url 'sunglasses' %}">Sunglasses</a></li>
+                        <li><a href="{% url 'eyeglasses' %}">Eyeglasses</a></li>
+                        <li><a href="{% url 'sunglasses' %}">Offers</a></li>
+                        <li><a href="{% url 'sunglasses' %}">Services</a></li>
+                        
     
                     </ul>
                 </div>
@@ -115,17 +134,17 @@
                     <section class="s-newsletter">
                         <div class="container">
                             <div class="row">
-                                    <div class="s-content">
-                                        <form>
-                                            <h5>Newsletter</h5>
-                                            <div class="input-group">
-                                                <input type="email" class="s-form-control" placeholder="Enter your email">
-                                                <span class="input-group-btn">
-                                                    <button class="s-btn" type="submit">Subscribe Now</button>
-                                                </span>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <div class="s-content">
+                                    <form>
+                                        <h5>Newsletter</h5>
+                                        <div class="input-group mt-4">
+                                            <input type="email" class="s-form-control p-2" placeholder="Enter your email">
+                                            <span class="input-group-btn">
+                                                <button class="s-btn" type="submit">Subscribe Now</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
                               
                             </div>
                         </div>

@@ -5,6 +5,7 @@ from django.contrib import messages
 from ecomWeb.forms import BillingAddressForm
 from . forms import BillingModelForm, UpdateProfile, UpdateUser
 from . models import BillingAdress
+from ecomWeb.models import Order, OrderItem
 # Create your views here.
 
 @login_required(login_url = 'login')
@@ -73,7 +74,7 @@ def register(request):
 
 @login_required(login_url = 'login')
 def myorder(request):
-    return render(request, 'users/profile/order.html')
 
+    return render(request, 'users/profile/order.html', {"orders" : Order.objects.filter(user = request.user), 'orderitems' : OrderItem.objects.all() })
 
 

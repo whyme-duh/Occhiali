@@ -1,6 +1,7 @@
-    {% extends 'ecomWeb/base.html' %}
-    {% block content%}
+{% extends 'ecomWeb/base.html' %}
+{% block content%}
     
+    {% for object in objects %}
     <div class=" container">
         <div class="detailPage">
             <div class="detailsPhoto">
@@ -30,15 +31,15 @@
                 </div>  
                 <hr>
                 <div class="price">
-                    <p>Total : Rs.{{object.price}}</p>
+                    <p>Total :Rs. {% if object.include_offer %}{{object.discount_price}}{% else%}{{object.price}}{% endif %}</p>
                     <div class="buttonGroup1">
                         <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart">
                             Add to cart
                         </button></a>
                         
-                        <button id="d-buynow">
-                            Buy now
-                        </button>
+                        <a href="{% url 'buy-now' object.id %}"><button id="d-buynow">
+                            Buy Now 
+                        </button></a>
                     </div>
                 </div>
                 <div class="shipping">
@@ -95,4 +96,31 @@
                 <p>{{object.description}}</p>
         </div>
     </div>
-    {% endblock %}
+    {% endfor %}
+    <div class="container-fluid d-flex justify-content-center flex-column align-items-center pb-5 mb-5">
+        <h1 class="d-related-products">You may also like</h1>
+        <div class="d-product-list d-flex">
+            {% for p in products%}
+                {% for product in p%}
+                <a href="{% url 'product-detail' product.slug%}">
+                    <div class="one" >
+                        <img src="{{product.upper_img}}">
+                        <div class="details">
+                            <p>{{product.brand}}</p>
+                            <h5>{{product.name}}</h5>
+                            <p>Rs. {{product.price }}</p>
+                        </div>
+                    </a>
+                        <div class="buttonGroup">
+                            <a href="{%url 'add-to-cart' product.id %}">
+                                <button id="cart-sunglass">
+                                    Add To Cart
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

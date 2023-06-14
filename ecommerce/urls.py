@@ -24,14 +24,20 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ecomWeb.urls')),
-    path('login/',auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),
+    path('login/',auth_views.LoginView.as_view(template_name = 'users/login.html', redirect_authenticated_user= True), name = 'login'),
     path('logout/',auth_views.LogoutView.as_view(template_name = 'users/register.html'), name = 'logout'),
     path('profile/', user_views.profile, name = 'profile'),
     path('profile/billing', user_views.billing, name = 'billing'),
     path('register/', user_views.register, name = 'register'),
     path('edit-profile/', user_views.editprofile, name = 'edit-profile'),
-    path('myorder/', user_views.myorder, name = 'myorder')
+    path('myorder/', user_views.myorder, name = 'myorder'),
+    path('khalti/', include('khalti.urls')),
+    
 ]
+
+handler404= 'ecomWeb.views.error_404_view'
+handler500 = 'ecomWeb.views.error_500_view'
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

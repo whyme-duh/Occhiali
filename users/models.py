@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phone_field import PhoneField
-from ecomWeb.models import Product
+from ecomWeb.models import Product, CartItems, Cart
 import datetime 
 
 # Create your models here.
@@ -20,32 +20,8 @@ class Profile(models.Model):
     
 
 
-class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_paid = models.BooleanField(default = False)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null = True)
-    order_date = models.DateField(default = datetime.datetime.today)
-
-    def __str__(self):
-        return self.is_paid
-    
-    def get_cart_total(self):
-        cart_items = self.cart_items.all()
-        price = []
-        for cart_item in cart_items:
-            price.append(cart_item.product.price)
-        return sum(price)
-   
-    
-
-class CartItems(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null = True, blank=True)
 
 
-    def get_price(self):
-        price = [self.product.price]
-        return sum(price)
 
 class BillingAdress(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default = True )

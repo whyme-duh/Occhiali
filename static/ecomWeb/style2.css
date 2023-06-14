@@ -51,6 +51,10 @@
     justify-content: space-between;
     padding-top: 40px;
 }
+.main12 a{
+    text-decoration: none;
+    color: black;
+}
 
 .one:hover{
     opacity: 0.9;
@@ -174,21 +178,25 @@ hr{
     letter-spacing: 2px;
     line-height: 2;
 }
-#cart{
+
+#d-cart{
     padding: 15px;
     letter-spacing: 2px;
-    background-color: black;
+    background-color: white;
     font-size: medium;
-    color: white;
-    border: none;
+    color: black;
+    border: 1px solid black;
     border-radius: 5px;
 }
-#buynow{
+#d-cart:hover{
+    background-color: rgb(211, 207, 207);
+}
+#d-buynow{
     padding: 15px;
     letter-spacing: 2px;
-    background-color: green;
+    background-color: rgb(147, 232, 147);
     font-size: medium;
-    color: white;
+    color: black;
     border:none;
     border-radius: 5px;
 }
@@ -286,6 +294,10 @@ strike{
     padding-top: 30px;
     /* margin: 50px; */
 }
+.main2 a{
+    text-decoration: none;
+    color: black;
+}
 .main2box img{
     width: 230px;
 }
@@ -336,24 +348,32 @@ strike{
 .more{
     padding-top: 150px;
 }
-.navbar {
+.d-navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: #FAFAFA;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
   
-.navbar a {
+.d-navbar a {
     float: left;
     font-size: 16px;
-    color: white;
+    color: black;
+    padding: 0.5em 1.5em 0.5em 1.5em;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
+    background-color: white;
+    margin: 1em;
+    border-radius: 10px;
 }
   
+#active{
+    background-color: rgb(211, 211, 211);
+}
 .dropdown {
+    display: flex;
+    align-items: center;
     float: left;
     overflow: hidden;
   
@@ -363,7 +383,7 @@ strike{
     font-size: 16px;  
     border: none;
     outline: none;
-    color: white;
+    color: black;
     padding: 14px 16px;
     background-color: inherit;
     font-family: inherit;
@@ -372,7 +392,7 @@ strike{
 }
   
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #9ca3af;
+    background-color: #f4f4f4;
 }
   
 .dropdown-content {
@@ -406,6 +426,18 @@ strike{
 .types{
     padding-left: 40px;
 }
+
 .dropdown{
     padding-right: 40px;
+}
+
+/* related product */
+
+.d-related-products{
+    font-size: 8em;
+    color: rgb(200, 230, 240);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.d-product-list{
+    gap: 3em;
 }

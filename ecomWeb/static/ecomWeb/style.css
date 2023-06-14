@@ -9,6 +9,13 @@ a{
     text-decoration:none;
     color: black;
 }
+table{
+    width: 100%;
+}
+th,td{
+    width: 40%;
+    padding-bottom: 1em;
+}
 
 header{
     display: block;
@@ -16,6 +23,13 @@ header{
 }
 main{   
     padding-bottom: 5em;
+}
+.alert{
+    position: absolute;
+    background-color: rgb(146, 253, 146);
+    right: 0;
+    z-index: 1;
+    margin:0.5em;
 }
 .top-level{
     padding-inline:10%;
@@ -120,8 +134,41 @@ button:hover{
     font-size: 1em;
     background-color: green;
 }
+/* cart */
 
+.cart-counter{
+    color: white;
+    border-radius: 50%;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    top: 12px;
+    font-size: 0.85em;
+    position: absolute;
+    right:60px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+/* dsrevices */
 
+.r-container{
+    margin-top: 5em;
+    width: 100%;
+    padding-inline: 10%;
+    position: relative;
+}
+
+.r-container img{
+    width: 100%;
+    border-radius: 20px;
+}
+.text-overlay{
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform:translate(-50%, -50%);
+}
 /* featured part */
 .featured,.hot-deals{
     margin-top: 3em;
@@ -188,6 +235,7 @@ button:hover{
     background-color: rgb(239, 237, 237);
     cursor: pointer;
 }
+
 
 /* category */
 .categories-list{
@@ -382,4 +430,17 @@ button:hover{
     padding-top: 40px;
     padding-left: 30px;
     padding-right: 30px;
+}
+
+
+/* order */
+
+#product-detail{
+    display: none;
+}
+
+/* payout */
+
+.card-detail h5{
+    font-size: 1em;
 }

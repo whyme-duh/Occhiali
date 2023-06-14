@@ -6,8 +6,12 @@
 <div class="container d-flex justify-content-between mt-5">
     <div class="col-md-7">
         <h3>Your Billing Address</h3>
-            <form action="{% url 'placeorder' %}" method="POST" class="mt-4" >
+           
+
+            <form action="{% url 'placeorder' %}" method="POST" class="mt-4">
                 {% csrf_token %}
+                <!-- {{form}} -->
+                <!-- Email input -->
                 <div class="form-group d-flex justify-content-between">
                     <div class="form-outline mb-4 col-md-5">
                         <label class="form-label " for="first_name">First Name</label> 
@@ -32,47 +36,50 @@
                     <label class="form-label" for="address 1">Phone </label>
                     <input type="phone" required class="form-control" name="phone" placeholder="Enter your phone ">
 
-                </div>
+                </div>  
                 <button   class="btn btn-primary btn-lg w-100 btn-block mt-3" > Cash On Delivery</button>
-                <button  id="payment-button" class="btn  btn-lg w-100 btn-block mt-3" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
-
-                
     
             </form>
-
-            </a>            
-
-    
-           
-            
-            
-
-       
+            <button  id="payment-button" class="btn  btn-lg w-100 btn-block mt-3" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
 
 
-
+   
     </div>
     <div class="col-md-4">
         <h3 class="text-center">Your cart</h3>
+        {% if carts %}
         {% for value in carts %}
-            <div class="container d-flex justify-content-start border rounded p-2">
-                <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
-                <div class="card-detail ps-3 pt-2">
-                    <h5 class="">{{value.product.name}}</h5>
-                    <p>Rs. {{value.product.price}}</p>
+            <div class="container d-flex justify-content-between align-items-center border rounded p-2">
+                <div class="cart-detail d-flex justify-content-start align-items-center">
+                    <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
+                    <div class="card-detail ps-3 pt-2">
+                        <h5>{{value.product.name}}</h5>
+                        <p>Rs. {{value.product.price}}</p>
+                    </div>
                 </div>
-            </div>
+                <a href="{% url 'remove-cart' value.id %}"><i class="fa fa-trash-o" style="color:red;font-size: 1.25em;"></i></a>
+
+           </div>
+           
+            
         {% endfor %}
         <div class="container border rounded p-3">
             <h5>Total : Rs. {{totalprice}}</h5>
         </div>
+        {% else %}
+        <div class="container d-flex flex-column justify-content-center align-items-center mt-5 p-3 border">
+            <h5>Your cart seems to be empty!</h5>
+            <a href="{% url 'home' %}" class="btn btn-warning mt-3" >Go Home</a>
+
+        </div>
+        {% endif %}
+        
         
     </div>
     
 </div>
 <script>
     var config = {
-        
         // replace the publicKey with yours
         "publicKey": "test_public_key_93c03d427fc84712a7e39b6bd61d7e23",
         "productIdentity": "1234567890",

@@ -2,7 +2,8 @@
 {% block title%} Sunglaseses{% endblock %}
 {% include 'ecomWeb/navbar.html'%}
 
-{% block content %}  
+{% block content %} 
+    
     <div class="d-navbar">
         <div class="types">
             <a href="{% url 'sunglasses' %}" id="active">All</a>
@@ -11,6 +12,7 @@
 
             <!-- <a href="#">Kids</a> -->
         </div>
+        
         <div class="dropdown">
             <button class="dropbtn">Sort By
                 <i class="fa fa-caret-down"></i>
@@ -25,7 +27,8 @@
     <div class="main">
             <div class="main1">
                 <div class="main1Title">
-                    <h2>OFFERS!!</h2>
+                    <h2>Offers</h2>
+                    <p>Grab your offers right now!</p>
                 </div>
                 <div class="main12">
                     {% for product in offers %}
@@ -35,7 +38,7 @@
                                 <div class="details">
                                     <p>{{product.brand}}</p>
                                     <h5>{{product.name}}</h5>
-                                    <p><strike>{{product.price}}</strike> {{product.discount_price}}</p>
+                                    <p>Rs. <strike>{{product.price}}</strike> {{product.discount_price}}</p>
                                 </div>
                             </a>
                                 <div class="buttonGroup">

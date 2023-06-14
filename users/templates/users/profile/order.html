@@ -5,7 +5,6 @@
 <div class="container content-section mt-5" >
 	<div class="container d-flex justify-content-between p-0 m-0">
 		<h3>Occhila Profile</h3>
-		<a class="btn btn-secondary"> Edit Profile</a>
 	</div>
 	<hr>
 	<div class=" row d-flex mt-5">
@@ -18,9 +17,9 @@
 
 			<nav>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item p-4"><a href="{% url 'myorder' %}" >Personal Information</a></li>
+					<li class="list-group-item p-4"><a href="{% url 'profile' %}" >Personal Information</a></li>
 					<li class="list-group-item p-4"><a href="{% url 'billing' %}">Billing & Payments</a></li>
-					<li class="list-group-item p-4"><a href="{% url 'billing' %}" style="font-weight:bold;" >Order History</a></li>
+					<li class="list-group-item p-4"><a href="{% url 'myorder' %}" style="font-weight:bold;" >Order History</a></li>
 					<li class="list-group-item p-4"><a href="#" >Redeem Coupon</a></li>
 				</ul>
 			</nav>
@@ -31,34 +30,55 @@
 			<h4>Order History</h4>
 			<p>Manage and view your order history up to date.</p>
 			<div class="row mt-5">
+				{% for order in orders %}
 				<div class="card col-md-12 bg-light p-3 rounded mb-4">
 					<div class="header d-flex justify-content-between">
-						<h5>Order #1</h5>
-						<button class="btn btn-primary">Pending</button>
-					</div>
-					<small>Created At: 2012-20-23</small>
-					<hr style="background-color: black;">
-					<div class="product-detail d-flex justify-content-between m-0 pt-2">
-						<div class="product-name">
-							<h5>Product</h5>
-							<p>HP Monitor 145Hz</p>
-						</div>
-						<div class="product-price">
-							<h5>Price</h5>
-							<p>Rs. 45000</p>
+						<h5>Order</h5>
+						{% if order.status == "Pending" %}
+						<button class="btn btn-primary">{{order.status}}</button>
+						{% elif order.status == "Out for Shipping" %}
+						<button class="btn btn-warning">{{order.status}}</button>
+						{% else %}
+						<button class="btn btn-success">{{order.status}}</button>
+						{% endif%}
 
-						</div>
-						<div class="product-quantity">
-							<h5>Quantity</h5>
-							<p>1</p>
-						</div>
-						<div class="product-total">
-							<h5>Total</h5>
-							<p>Rs. 45000</p>
+					</div>
+					<small>Created At: {{order.created_at}}</small>
+					<!-- <i class="fa fa-angle-double-down d-flex justify-content-center align-items-center " id="down"></i> -->
+					
+					<div class="product-detail d-flex flex-column mt-0" >
+
+						<hr style="background-color: black;">
+
+						<div class="d-flex " >
+							<table >
+								<tr>
+									<th>Product</th>
+									<th>Size</th>
+									<th>Price</th>
+								</tr>
+									{% for items in orderitems %}
+									{% if items.order == order %}
+									<tr>
+										<td>{{items.product.name}}</td>
+										<td>{{items.product.size}}</td>
+										<td>Rs. {{items.product.price}}</td>
+	
+									</tr>
+									{% endif %}
+	
+									{% endfor %}
+								<tr>
+									<td></td>
+									<td><b>Total</b></td>
+									<td ><b>	Rs. {{order.total_price}}</b></td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					
 				</div>
+				{% endfor %}
 
 			
 				

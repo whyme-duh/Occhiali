@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+import rest_framework
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,7 @@ SECRET_KEY = 'SECRET_KEY'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'ecomWeb.apps.EcomwebConfig',
     'crispy_forms',
     'cart',
+    'khalti',
+    'rest_framework',
     'widget_tweaks',
     "phone_field",
     'users.apps.UsersConfig',
@@ -148,3 +151,7 @@ CART_SESSION_ID = 'cart'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+KHALTI_SECRET_KEY = "test_secret_key_6c0593bcc34a48a387424574ed7b17f1"
+KHALTI_PUBLIC_KEY = "test_public_key_93c03d427fc84712a7e39b6bd61d7e23"
+KHALTI_VERIFY_URL = "https://khalti.com/api/v2/payment/verify/"

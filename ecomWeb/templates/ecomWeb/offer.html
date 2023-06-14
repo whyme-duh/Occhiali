@@ -2,27 +2,10 @@
 {% block title%} Sunglaseses{% endblock %}
 
 {% block content %}  
-    <div class="d-navbar">
-        <div class="types">
-            <a href="{% url 'sunglasses' %}" >All</a>
-            <a href="{% url 'men-sunglasses' %}" id="active">Men</a>
-            <a href="{% url 'women-sunglasses' %}">Women</a>
-
-            <!-- <a href="#">Kids</a> -->
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Sort By
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="#">Price: Low to High</a>
-                <a href="#">Newest</a>
-                <a href="#">Best sellers</a>
-            </div>
-        </div> 
-    </div>
+   
     <div class="main">
-          
+            <h3>Grab Yours Offers</h3>
+            <p>Offers upto 50% is available right now. Grab it now!</p>
             <div class="main2">
                 
                 {% for product in products %}
@@ -40,9 +23,11 @@
                         </div>
                     </a>
                         <div class="buttonGroup">
-                            <button id="cart-sunglass">
-                                Add To Cart
-                            </button>
+                            <a href="{% url 'add-to-cart' product.id %}">
+                                <button id="cart-sunglass">
+                                    Add To Cart
+                                </button>
+                            </a>
                             
                         </div>
                     </div>
@@ -51,8 +36,8 @@
               
               
             </div>
-            <div class="more">
+            <!-- <div class="more">
                 <a href="#"><h5><center>Show more</center></h5></a> 
-            </div>
+            </div> -->
     </div>
 {% endblock %}
