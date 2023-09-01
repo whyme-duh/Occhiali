@@ -3,74 +3,53 @@
 {% load cart_tag% }
 
 {% block content %}
-<div class="container d-flex justify-content-between mt-5">
-    <div class="col-md-7">
-        <h3>Your Billing Address</h3>
-            <form action="{% url 'placeorder' %}" method="POST" class="mt-4" >
-                {% csrf_token %}
-                <div class="form-group d-flex justify-content-between">
-                    <div class="form-outline mb-4 col-md-5">
-                        <label class="form-label " for="first_name">First Name</label> 
-                        <input type="text" required class="form-control" name="fname" placeholder="Enter your first name">
-                    </div>
-                    <div class="form-outline mb-4 col-md-5">
-                        <label class="form-label" for="first_name">Last Name</label>
-                        <input type="text" required class="form-control" name="lname" placeholder="Enter your last name">
-
-                    </div>
-                </div>
-        
-             
-                
-               <div class="form-outline mb-4">
-                <label class="form-label" for="address 1">Address 1</label>
-                <input type="text" required class="form-control" name="address" placeholder="Enter your locatiojn">
-
-            </div>
+<div class="container d-flex justify-content-between mt-5 ">
     
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="address 1">Phone </label>
-                    <input type="phone" required class="form-control" name="phone" placeholder="Enter your phone ">
+    <div class="col-md-4 order-view">
+        <h3 class="text-left">Your Order</h3>
 
-                </div>
-                <button   class="btn btn-primary btn-lg w-100 btn-block mt-3" > Cash On Delivery</button>
-                <button  id="payment-button" class="btn  btn-lg w-100 btn-block mt-3" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
-
-                
-    
-            </form>
-
-            </a>            
-
-    
-           
-            
-            
-
-       
-
-
-
-    </div>
-    <div class="col-md-4">
-        <h3 class="text-center">Your cart</h3>
         {% for value in carts %}
-            <div class="container d-flex justify-content-start border rounded p-2">
-                <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
+            <div class="payout-order-container w-100  p-2">
+                <div class="img-container">
+                    <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
+                </div>
                 <div class="card-detail ps-3 pt-2">
-                    <h5 class="">{{value.product.name}}</h5>
+                    <a href="{% url 'product-detail' value.product.slug %}">
+                     <h5 >{{value.product.name}}</h5>
+
+                    </a>
                     <p>Rs. {{value.product.price}}</p>
+                    
                 </div>
             </div>
         {% endfor %}
-        <div class="container border rounded p-3">
-            <h5>Total : Rs. {{totalprice}}</h5>
+        <hr style="color: rgb(233, 228, 228);">
+        <div class="payout-order-view p-3">
+            <div class="delivery d-flex justify-content-between">
+                <p>Delivery : </p> <p>{{delivery_cost}} </p>
+            </div>
+            <div class="discount d-flex justify-content-between">
+                <p>Discount : </p> <p>{{discount}} </p>
+
+            </div>
+            <div class="total d-flex justify-content-between">
+                <h5>Total : </h5><h5>Rs. {{totalprice}}</h5>
+
+
+            </div>
+            <a href="{% url 'initiate_payment' %}">
+                <!-- <button   class="btn  btn-lg mt-3 w-50 m-2" style="background-color: #59c352;color: white;" > Pay With Esewa</button> -->
+                <button   class="btn  btn-lg mt-3 w-50 m-2" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
+
+
+            </a>
         </div>
+       
         
     </div>
     
 </div>
-<script>
+<!-- <script>
     var config = {
         
         // replace the publicKey with yours
@@ -105,5 +84,5 @@
         // minimum transaction amount must be 10, i.e 1000 in paisa.
         checkout.show({amount: 1000});
     }
-    </script>
+    </script> -->
 {% endblock %}

@@ -31,7 +31,7 @@ urlpatterns = [
     path('register/', user_views.register, name = 'register'),
     path('edit-profile/', user_views.editprofile, name = 'edit-profile'),
     path('myorder/', user_views.myorder, name = 'myorder'),
-    path('khalti/', include('khalti.urls')),
+    
     
 ]
 

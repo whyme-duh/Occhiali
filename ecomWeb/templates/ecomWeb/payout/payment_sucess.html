@@ -1,0 +1,77 @@
+{% extends 'ecomWeb/base.html' %}
+{% load widget_tweaks %}
+{% load cart_tag% }
+
+{% block content %}
+<div class="whole-container d-flex justify-content-between mt-5  p-4">
+    <div class=" col-3 col-md-7">
+        <h3>Your Billing Address</h3>
+            <form  method="POST" action ="{%url 'placeorder' %}" class="mt-4" >
+                {% csrf_token %}
+                <div class="form-group d-flex justify-content-between">
+                    <div class="form-outline mb-4 col-md-5">
+                        <label class="form-label " for="first_name">First Name</label> 
+                        <input type="text" required class="form-control" name="fname" placeholder="Enter your first name">
+                    </div>
+                    <div class="form-outline mb-4 col-md-5">
+                        <label class="form-label" for="first_name">Last Name</label>
+                        <input type="text" required class="form-control" name="lname" placeholder="Enter your last name">
+
+                    </div>
+                </div>
+               <div class="form-outline mb-4">
+                    <label class="form-label" for="address 1">Address 1</label>
+                    <input type="text" required class="form-control" name="address" placeholder="Enter your location">
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="address 1">Phone </label>
+                    <input type="phone" required class="form-control" name="phone" placeholder="Enter your phone ">
+                </div>
+                    <!-- <a href="{%url 'initiate_payment' %}"> -->
+                        <!-- <button   class="btn btn-primary btn-lg btn-block mt-3" > Cash On Delivery</button> -->
+                <small>Note: Your order will be placed after clicking "Place order" button</small>
+
+                <button   class="btn  btn-lg mt-3 btn m-2 w-100" style="background-color: #090909;color: white;" > Place order</button>
+            </form>
+            </a>            
+    </div>
+    
+    <div class="col-4 d-flex justify-content-between mt-5 pb-0 ">
+    
+        <div class="col-md-12 order-view">
+            <h3 class="text-left d-flex justify-content-between align-items-center">Your Order <span style="background-color: rgb(180, 246, 180);padding-inline: 1.5em;padding-block:0.25;font-size:0.45em;border-radius: 10px;">Paid</span></h3>
+    
+            {% for value in carts %}
+                <div class="payout-order-container w-100  p-2">
+                    <div class="img-container">
+                        <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
+                    </div>
+                    <div class="card-detail ps-3 pt-2">
+                        <a href="{% url 'product-detail' value.product.slug %}">
+                         <h5 >{{value.product.name}}</h5>
+    
+                        </a>
+                        <p>Rs. {{value.product.price}}</p>
+                        
+                    </div>
+                </div>
+            {% endfor %}
+            <hr style="color: rgb(233, 228, 228);">
+            <div class="payout-order-view p-3 pb-0">
+                <div class="delivery d-flex justify-content-between">
+                    <p>Delivery : </p> <p>{{delivery_cost}} </p>
+                </div>
+                <div class="discount d-flex justify-content-between">
+                    <p>Discount : </p> <p>{{discount}} </p>
+    
+                </div>
+                <div class="total d-flex justify-content-between">
+                    <h5>Total : </h5><h5>Rs. {{totalprice}}</h5>
+                </div>
+                
+            </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

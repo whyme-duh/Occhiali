@@ -33,14 +33,22 @@
 				{% for order in orders %}
 				<div class="card col-md-12 bg-light p-3 rounded mb-4">
 					<div class="header d-flex justify-content-between">
-						<h5>Order</h5>
-						{% if order.status == "Pending" %}
-						<button class="btn btn-primary">{{order.status}}</button>
+						<h5 class="col-md-8">Order</h5>
+						<div class="col-md-4 d-flex justify-content-between" >
+							{{order.payment_completed}}
+							{% if order.payment_completed == "True" %}
+						<button class="btn btn-primary">{{order.payment_completed}}</button>
 						{% elif order.status == "Out for Shipping" %}
 						<button class="btn btn-warning">{{order.status}}</button>
 						{% else %}
 						<button class="btn btn-success">{{order.status}}</button>
 						{% endif%}
+						<a href="{% url 'cancel-order' order.id %}">
+						
+						<button class="btn btn-danger">Cancel Order</button>
+						</div>
+
+						</a>
 
 					</div>
 					<small>Created At: {{order.created_at}}</small>

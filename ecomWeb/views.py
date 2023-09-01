@@ -13,6 +13,7 @@ from . forms import BillingAddressForm, CouponForm, CardForm
 from django.http import HttpResponseRedirect
 from django.views import View
 import random
+import requests, json
 
 # Create your views here.
 def index(request):
@@ -88,20 +89,26 @@ def womenSunglasses(request):
      
 @login_required(login_url='login')
 def cart(request):
-    if request.method == 'POST':
-        form = CouponForm(request.POST)
-        if form.is_valid():
-            code = form.cleaned_data['code']
+    # if request.method == 'POST':
+    #     form = CouponForm(request.POST)
+    #     if form.is_valid():
+    #         code = form.cleaned_data['code']
 
-            if code == "ritik":
-                messages.success(request, f'Code matched')
-            else:
-                messages.warning(request, f'Code did not matched.')
+    #         if code == "ritik":
+    #             messages.success(request, f'Code matched')
+    #         else:
+    #             messages.warning(request, f'Code did not matched.')
 
-            return redirect('cart')
-    else:
-        form =CouponForm()
-    return render(request, 'ecomWeb/cart.html', {'form' : form, 'carts': Cart.objects.filter(is_paid = False, user = request.user)})
+    #         return redirect('cart')
+    # else:
+    #     form =CouponForm()
+    cartitems = Cart.objects.filter(user = request.user)
+    delivery_cost, discount = 150, 0
+    totalPrice = 0
+    for item in cartitems :
+        totalPrice = totalPrice+item.product.price 
+    totalPrice += delivery_cost - discount
+    return render(request, 'ecomWeb/cart.html', { 'carts': Cart.objects.filter(is_paid = False, user = request.user), 'totalprice' : totalPrice, 'delivery_cost':delivery_cost, 'discount' : discount  })
 
 def add_to_cart(request, id):
     product = Product.objects.get(id = id)
@@ -144,6 +151,7 @@ def buypayout(request):
 
 @login_required(login_url='login')
 def placeorder(request):
+    discount, delivery_charge = 0, 150
     if request.method == 'POST':
         neworder = Order()
         neworder.user= request.user
@@ -156,12 +164,13 @@ def placeorder(request):
         cart_totalPrice = 0
         for item in cart:
             cart_totalPrice += item.product.price 
-        neworder.total_price = cart_totalPrice
-        # track_number = 'ecomm' + str(random.randint(1111111,9999999))
+        neworder.total_price = cart_totalPrice + delivery_charge -discount
+        neworder.payment_completed = True
+        track_number = 'ecomm' + str(random.randint(1111111,9999999))
 
-        # while Order.objects.filter(tracking_no = track_number) in None:
-        #     track_number = 'ecomm' + str(random.randint(111111,9999999))
-        # neworder.tracking_no = track_number
+        while Order.objects.filter(tracking_no = track_number) is None:
+            track_number = 'ecomm' + str(random.randint(111111,9999999))
+        neworder.tracking_no = track_number
         neworder.save()
 
         neworder_items = Cart.objects.filter(user = request.user)
@@ -182,18 +191,14 @@ def placeorder(request):
 @login_required(login_url = 'login')
 def payout(request):
     cartitems = Cart.objects.filter(user = request.user)
+    delivery_cost, discount = 150, 0
     totalPrice = 0
     for item in cartitems :
-        totalPrice = totalPrice+item.product.price
-    return render(request, 'ecomWeb/payout/payout.html', {  'carts': Cart.objects.filter(is_paid = False, user = request.user) , 'totalprice' : totalPrice, })
+        totalPrice = totalPrice+item.product.price 
+    totalPrice += delivery_cost - discount
+    return render(request, 'ecomWeb/payout/payout.html', {  'carts': Cart.objects.filter(is_paid = False, user = request.user) , 'totalprice' : totalPrice, 'delivery_cost':delivery_cost, 'discount' : discount  })
 
 
-def KhaltiRequestView(request, id):
-    card = Carts.objects.get(id= id)
-    context = {
-        "cart" : cart
-    }
-    return render(request, 'khaltirequest.html', context)
 
 def offers(request):
     return render(request, 'ecomWeb/offer.html', {"products" : Product.objects.filter(include_offer = True)})
@@ -203,8 +208,84 @@ def services(request):
     return render(request, 'ecomWeb/services.html')
 
 
-class KhaltiVerify(View):
 
-    def get(self,request,*args,**kwargs):
-        data = {}
-        return JsonResponse(data)
+
+    
+def make_payment(request):
+    cartitems = Cart.objects.filter(user = request.user)
+    delivery_cost, discount = 150, 0
+    totalPrice = 0
+    for item in cartitems :
+        totalPrice = totalPrice+item.product.price 
+    totalPrice =( totalPrice+ delivery_cost - discount)
+    khalti_public_key = "test_public_key_93c03d427fc84712a7e39b6bd61d7e23"
+    return_url = "http://127.0.0.1:8000/success-payment/"
+    url = "https://khalti.com/api/v2/epayment/initiate/"
+
+    payload = json.dumps({
+        'public_key' : khalti_public_key,
+        "return_url": return_url,
+        "website_url": "http://127.0.0.1:8000/home/",
+        "amount": "5000",
+        "purchase_order_id": "Order01",
+        "purchase_order_name": "test",
+        
+    })
+    headers = {
+        'Authorization': 'Key test_secret_key_f9a610ec6a0b48ae8d71dac68a29d47c',
+        'Content-Type': 'application/json',
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    data = response.json()
+    print(data)
+   
+   
+    if 'payment_url' in data:
+        payment_url = data['payment_url']
+        return redirect(payment_url)
+   
+    else:
+        return render(request, 'ecomWeb/error.html')
+    
+
+@login_required(login_url='login')
+def payment_sucess(request):
+   
+    status = request.GET.get("status")
+    if status == "Completed":
+        cartitems = Cart.objects.filter(user = request.user)
+        delivery_cost, discount = 150, 0
+        totalPrice = 0
+        for item in cartitems :
+            totalPrice = totalPrice+item.product.price 
+        totalPrice += delivery_cost - discount
+        return render(request, 'ecomWeb/payout/payment_sucess.html', {'carts': Cart.objects.filter(is_paid = False, user = request.user), 'totalprice' : totalPrice, 'delivery_cost':delivery_cost, 'discount' : discount })
+    else:
+        return render(request, 'ecomWeb/Error/payment_error.html')
+
+
+
+
+def esewa_payment(request):
+    url ="https://uat.esewa.com.np/epay/main"
+    d = {'amt': 100,
+        'pdc': 0,
+        'psc': 0,
+        'txAmt': 0,
+        'tAmt': 100,
+        'pid':'ee2c3ca1-696b-4cc5-a6be-2c40d929d453',
+        'scd':'EPAYTEST',
+        'su':'http://merchant.com.np/page/esewa_payment_success?q=su',
+        'fu':'http://merchant.com.np/page/esewa_payment_failed?q=fu'}
+    resp = requests.post(url,data= d)
+    print(resp)
+    return render(request , 'ecomWeb/Esewa/esewa.html')
+
+def cancel_order(request, id):
+    try:
+        cart_item = Order.objects.get(id = id)
+        cart_item.delete()
+    except Exception as e:
+        print(e)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -1,0 +1,18 @@
+{% extends 'ecomWeb/base.html' %}
+
+{% block content %}
+<body>
+    <form action="https://uat.esewa.com.np/epay/main" method="POST">
+    <input value="100" name="tAmt" type="text">
+    <input value="90" name="amt" type="text">
+    <input value="5" name="txAmt" type="text">
+    <input value="2" name="psc" type="text">
+    <input value="3" name="pdc" type="text">
+    <input value="EPAYTEST" name="scd" type="text">
+    <input value="ee2c3ca1-696b-4cc5-a6be-2c40d929d453" name="pid" type="text">
+    <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="text" name="su">
+    <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="text" name="fu">
+    <input value="Submit" type="submit">
+    </form>
+</body>
+{% endblock %}

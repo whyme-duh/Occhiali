@@ -7,15 +7,13 @@
 
 
 {% if carts%}
+<div class="whole-container " style="position: absolute;height: 100%;">
+      <div class="row d-flex justify-content-center">
 
-<section  style="background-color: #eee;">
-    <div class="container h-100 py-5">
-      <div class="row d-flex justify-content-center h-100">
-        <div class="col-8">
-  
-          
+        <div class="col-5 mt-5">
+
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+            <h3 class="fw-normal mb-0 text-black">Your Cart</h3>
             <a href="{% url 'delete-cart'%}" class="btn btn-danger">Delete <i class="fa fa-trash-o"></i></a>
           
           </div>
@@ -26,7 +24,7 @@
 
                 <div class="row d-flex justify-content-between align-items-center">
 
-                  <div class="col-md-2 col-lg-2 col-xl-2">
+                  <div class="col-md-2 col-lg-2 col-xl-2" >
                     <img
                       src="{{value.product.upper_img}}"
                       class="img-fluid rounded-3" alt="#">
@@ -67,10 +65,53 @@
               </div>
             </div>
           {% endfor %}
-
-          <div class="card">
-            <a class="btn btn-success btn-block btn-lg" href="{% url 'payout' %}">Proceed to Pay</a>
         </div>
+        <div class="col-3 d-flex justify-content-between mt-5 ">
+    
+          <div class="col-md-12 order-view">
+              <h3 class="text-left">Your Order</h3>
+      
+              {% for value in carts %}
+                  <div class="payout-order-container w-100  p-2">
+                      <div class="img-container">
+                          <img src="{{value.product.upper_img}}" alt="" width="100" height="70">
+                      </div>
+                      <div class="card-detail ps-3 pt-2">
+                          <a href="{% url 'product-detail' value.product.slug %}">
+                           <h5 >{{value.product.name}}</h5>
+      
+                          </a>
+                          <p>Rs. {{value.product.price}}</p>
+                          
+                      </div>
+                  </div>
+              {% endfor %}
+              <hr style="color: rgb(233, 228, 228);">
+              <div class="payout-order-view p-3">
+                  <div class="delivery d-flex justify-content-between">
+                      <p>Delivery : </p> <p>{{delivery_cost}} </p>
+                  </div>
+                  <div class="discount d-flex justify-content-between">
+                      <p>Discount : </p> <p>{{discount}} </p>
+      
+                  </div>
+                  <div class="total d-flex justify-content-between">
+                      <h5>Total : </h5><h5>Rs. {{totalprice}}</h5>
+      
+      
+                  </div>
+  <small>Note: Billing address will be able to form after payment.</small>
+
+                  <a href="{% url 'initiate_payment' %}">
+                      <!-- <button   class="btn  btn-lg mt-3 w-50 m-2" style="background-color: #59c352;color: white;" > Pay With Esewa</button> -->
+                      <button   class="btn  btn-lg mt-3 w-100 m-2" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
+      
+      
+                  </a>
+              </div>
+             
+              
+          </div>
          
           
   
@@ -81,11 +122,9 @@
         </div>
        
       </div>
-    </div>
-  </section>
   {% else %}
 
-  <div class="container mt-5 pt-5 d-flex justify-content-center flex-column align-items-center">
+  <div class="containear-fluid mt-5 pt-5 d-flex justify-content-center flex-column align-items-center">
     <img src="/media/images/cart.png" alt="" width="100" height="100">
     <div class="content pt-5 d-flex flex-column justify-content-center align-items-center">
       <h2>Your Cart Is <span style="color:red;">Empty</span></h2>
@@ -93,6 +132,8 @@
       <a href="{% url 'home' %}" class="btn btn-warning mt-3 ">Go Back Shopping</a>
     </div>
   </div>
-  {% endif %}
+</div>
+
+{% endif %}
 
 {% endblock %}

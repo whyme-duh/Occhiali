@@ -75,6 +75,6 @@ def register(request):
 @login_required(login_url = 'login')
 def myorder(request):
 
-    return render(request, 'users/profile/order.html', {"orders" : Order.objects.filter(user = request.user), 'orderitems' : OrderItem.objects.all() })
+    return render(request, 'users/profile/order.html', {"orders" : Order.objects.filter(user = request.user).order_by('id'), 'orderitems' : OrderItem.objects.all() })
 
 

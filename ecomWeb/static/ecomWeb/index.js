@@ -1,31 +1,25 @@
 
 
 
-setTimeout(()=>{
-    var message = document.getElementById('alert');
+// // order style
 
-    message.style.display= "none";  
-}, 2000)
+// var angledown = document.getElementById('down');
+// angledown.addEventListener('click', ()=>{
+//     document.getElementById('product-detail').style.display = "block";
+// })
 
-// order style
+// var addForm = document.getElementById('addForm');
+// var closeBtn = document.getElementById('close')
 
-var angledown = document.getElementById('down');
-angledown.addEventListener('click', ()=>{
-    document.getElementById('product-detail').style.display = "block";
-})
+// addForm.addEventListener('click' , ()=>{
+//     document.getElementById('form').style.display = 'block';
+//     document.getElementById('close').style.display = 'inline';
+//     document.getElementById('form').style.transition = '1s ease-in';
+// });
 
-var addForm = document.getElementById('addForm');
-var closeBtn = document.getElementById('close')
-
-addForm.addEventListener('click' , ()=>{
-    document.getElementById('form').style.display = 'block';
-    document.getElementById('close').style.display = 'inline';
-    document.getElementById('form').style.transition = '1s ease-in';
-});
-
-closeBtn.addEventListener('click' , ()=>{
-    document.getElementById('form').style.display = 'none';
-    document.getElementById('close').style.display = 'none';
-});
+// closeBtn.addEventListener('click' , ()=>{
+//     document.getElementById('form').style.display = 'none';
+//     document.getElementById('close').style.display = 'none';
+// });
 
 
