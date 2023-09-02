@@ -1,5 +1,13 @@
 {% extends 'ecomWeb/base.html' %}
+{% block title %}
+{% for object in objects|slice:'1' %}
+{{object.name}}
+{% endfor %}
+{% endblock %}
+
 {% block content%}
+
+
     
     {% for object in objects %}
     <div class="whole-container"  >
@@ -24,22 +32,24 @@
                 <div class="size">
                     <p> Size: <span class="product-size">{{object.size}}</span></p>
                     <div class="colors">
-                        <p>Colors available : </p>
-                        <button style="background-color: black; padding: 16px;border: none;"></button>
-                        <button style="background-color: brown;padding: 16px;border: none;"></button>
+                        <p>Colors available : {{object.lens_color}}
+                        </p>
+                        
+                        <!-- <button style="background-color: black; padding: 16px;border: none;"></button>
+                        <button style="background-color: brown;padding: 16px;border: none;"></button> -->
                     </div> 
                 </div>  
                 <hr>
                 <div class="price">
                     <p>Total :Rs. {% if object.include_offer %}{{object.discount_price}}{% else%}{{object.price}}{% endif %}</p>
-                    <div class="buttonGroup1">
-                        <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart">
+                    <div class="buttonGroup1 w-100">
+                        <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart" class="btn btn-lng w-100">
                             Add to cart
                         </button></a>
                         
-                        <a href="{% url 'buy-now' object.id %}"><button id="d-buynow">
+                        <!-- <a href="{% url 'buy-now' object.id %}"><button id="d-buynow">
                             Buy Now 
-                        </button></a>
+                        </button></a> -->
                     </div>
                 </div>
                 <div class="shipping">

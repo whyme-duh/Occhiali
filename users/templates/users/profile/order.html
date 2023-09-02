@@ -1,7 +1,10 @@
 {% extends 'ecomWeb/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% block title%} Orders{% endblock %}
+
 {% block content %}
+
 <div class="container content-section mt-5" >
 	<div class="container d-flex justify-content-between p-0 m-0">
 		<h3>Occhila Profile</h3>
@@ -33,22 +36,25 @@
 				{% for order in orders %}
 				<div class="card col-md-12 bg-light p-3 rounded mb-4">
 					<div class="header d-flex justify-content-between">
-						<h5 class="col-md-8">Order</h5>
-						<div class="col-md-4 d-flex justify-content-between" >
-							{{order.payment_completed}}
-							{% if order.payment_completed == "True" %}
-						<button class="btn btn-primary">{{order.payment_completed}}</button>
-						{% elif order.status == "Out for Shipping" %}
-						<button class="btn btn-warning">{{order.status}}</button>
-						{% else %}
-						<button class="btn btn-success">{{order.status}}</button>
-						{% endif%}
-						<a href="{% url 'cancel-order' order.id %}">
+						<h5 class="text-left d-flex justify-content-between align-items-center">Order {% if order.payment_completed == True%}<span class="ms-2" style="background-color: rgb(180, 246, 180);padding-inline: 1.5em;padding-block:0.25;font-size:0.45em;border-radius: 10px;">Paid</span>{% endif%}</h5>
+
+						<!-- <h5 class="col-md-8">Order</h5> -->
+						<div class="col-md-4 d-flex justify-content-end" >
+							<!-- for the shipping -->
+							{% if order.status == "Pending" %}
+							<button class="btn btn-primary">{{order.status}}</button>
+							{% elif order.status == "Out for Shipping" %}
+							<button class="btn btn-warning">{{order.status}}</button>
+							{% else %}
+							<button class="btn btn-success">{{order.status}}</button>
+							{% endif%}
+						<!-- <a href="{% url 'cancel-order' order.id %}">
 						
 						<button class="btn btn-danger">Cancel Order</button>
+						</a> -->
+
 						</div>
 
-						</a>
 
 					</div>
 					<small>Created At: {{order.created_at}}</small>
@@ -81,11 +87,15 @@
 									<td><b>Total</b></td>
 									<td ><b>	Rs. {{order.total_price}}</b></td>
 								</tr>
+
 							</table>
 						</div>
+				<small class="mt-3">Note: Your total includes delivery cost, discount and total items cost.</small>
+
 					</div>
 					
 				</div>
+
 				{% endfor %}
 
 			

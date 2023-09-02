@@ -104,11 +104,11 @@ def cart(request):
     #     form =CouponForm()
     cartitems = Cart.objects.filter(user = request.user)
     delivery_cost, discount = 150, 0
-    totalPrice = 0
+    totalPrice ,itemprice= 0,0
     for item in cartitems :
-        totalPrice = totalPrice+item.product.price 
-    totalPrice += delivery_cost - discount
-    return render(request, 'ecomWeb/cart.html', { 'carts': Cart.objects.filter(is_paid = False, user = request.user), 'totalprice' : totalPrice, 'delivery_cost':delivery_cost, 'discount' : discount  })
+        itemprice = itemprice + item.product.price 
+    totalPrice =itemprice+ delivery_cost - discount
+    return render(request, 'ecomWeb/cart.html', { 'carts': Cart.objects.filter(is_paid = False, user = request.user), 'itemprice' : itemprice, 'totalprice' : totalPrice, 'delivery_cost':delivery_cost, 'discount' : discount  })
 
 def add_to_cart(request, id):
     product = Product.objects.get(id = id)
@@ -212,6 +212,7 @@ def services(request):
 
     
 def make_payment(request):
+    order_id = random.randint(1,19999)
     cartitems = Cart.objects.filter(user = request.user)
     delivery_cost, discount = 150, 0
     totalPrice = 0
@@ -220,23 +221,24 @@ def make_payment(request):
     totalPrice =( totalPrice+ delivery_cost - discount)
     khalti_public_key = "test_public_key_93c03d427fc84712a7e39b6bd61d7e23"
     return_url = "http://127.0.0.1:8000/success-payment/"
-    url = "https://khalti.com/api/v2/epayment/initiate/"
+    url = "https://a.khalti.com/api/v2/epayment/initiate/"
 
     payload = json.dumps({
         'public_key' : khalti_public_key,
         "return_url": return_url,
         "website_url": "http://127.0.0.1:8000/home/",
-        "amount": "5000",
-        "purchase_order_id": "Order01",
-        "purchase_order_name": "test",
+        "amount": totalPrice,
+        "purchase_order_id":order_id ,
+        "purchase_order_name": "Eyewears",
+        
         
     })
     headers = {
-        'Authorization': 'Key test_secret_key_f9a610ec6a0b48ae8d71dac68a29d47c',
+        'Authorization': 'Key 509023eaf0b847a9b8e529d54758cda8',
         'Content-Type': 'application/json',
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    response = requests.request("POST", url, headers=headers, data=payload, verify=False)
     data = response.json()
     print(data)
    
@@ -278,9 +280,12 @@ def esewa_payment(request):
         'scd':'EPAYTEST',
         'su':'http://merchant.com.np/page/esewa_payment_success?q=su',
         'fu':'http://merchant.com.np/page/esewa_payment_failed?q=fu'}
-    resp = requests.post(url,data= d)
-    print(resp)
-    return render(request , 'ecomWeb/Esewa/esewa.html')
+    resp = requests.request("POST",url,data= d)
+    if resp.status_code == 200:
+        return render(request, 'ecomWeb/payout/payment_sucess.html')
+    else:
+        return render(request, 'ecomWeb/Error/payment_error.html')
+
 
 def cancel_order(request, id):
     try:

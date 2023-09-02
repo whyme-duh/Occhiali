@@ -28,7 +28,6 @@ class BillingAdress(models.Model):
     first_name = models.CharField(max_length=80, null = False)
     last_name = models.CharField(max_length=80, null = False)
     address1 = models.CharField(max_length=100, null= False)
-    address2 = models.CharField(max_length=100, null= True, blank = True)
     phone = PhoneField(blank=False)
 
 

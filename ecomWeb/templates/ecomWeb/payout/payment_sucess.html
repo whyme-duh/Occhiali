@@ -5,7 +5,7 @@
 {% block content %}
 <div class="whole-container d-flex justify-content-between mt-5  p-4">
     <div class=" col-3 col-md-7">
-        <h3>Your Billing Address</h3>
+        <h3>Your Shipping Address</h3>
             <form  method="POST" action ="{%url 'placeorder' %}" class="mt-4" >
                 {% csrf_token %}
                 <div class="form-group d-flex justify-content-between">
