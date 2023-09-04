@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from . models import Product,Order, OrderItem
+from users. models import Wishlist
 from django.http import JsonResponse
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
@@ -29,9 +30,7 @@ def detailpage(request, slug):
     
     for i in range(4):
         rn = random.choice(product_ids)
-       
         product_array.append(Product.objects.filter(id=rn).exclude(slug=slug))
-
     return render(request, 'ecomWeb/detail-page.html', {"objects" : Product.objects.filter(slug = slug) , "products" : product_array})
 
 
@@ -115,7 +114,12 @@ def add_to_cart(request, id):
     user = request.user
     if request.user.is_authenticated:
         cart, _ = Cart.objects.get_or_create(user = user, is_paid = False, product = product)
-        cart_items = CartItems.objects.get_or_create(cart = cart, product = product)
+        if product.include_offer:
+            product.price = product.discount_price
+            product.save()
+            cart_items = CartItems.objects.get_or_create(cart = cart, product = product)
+        else:
+            cart_items = CartItems.objects.get_or_create(cart = cart, product = product)
         messages.success(request, "Item Added Successfully!")
     else: 
         messages.error(request, f"You have to login in order to add items in cart.")
@@ -183,6 +187,7 @@ def placeorder(request):
         
         # to clear user cart objects
         Cart.objects.filter(user = request.user).delete()
+        Wishlist.objects.filter(user = request.user).delete()
         messages.success(request, f"Your order has been placed!")
 
     return redirect('myorder')        
@@ -223,13 +228,14 @@ def make_payment(request):
     return_url = "http://127.0.0.1:8000/success-payment/"
     url = "https://a.khalti.com/api/v2/epayment/initiate/"
 
-    payload = json.dumps({
+    payload = JsonResponse({
         'public_key' : khalti_public_key,
         "return_url": return_url,
         "website_url": "http://127.0.0.1:8000/home/",
-        "amount": totalPrice,
+        "amount": totalPrice * 10,
         "purchase_order_id":order_id ,
         "purchase_order_name": "Eyewears",
+        
         
         
     })

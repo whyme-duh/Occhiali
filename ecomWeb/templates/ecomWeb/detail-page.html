@@ -30,9 +30,9 @@
                 </div>
                 <hr>
                 <div class="size">
-                    <p> Size: <span class="product-size">{{object.size}}</span></p>
+                    <p> <b>Size:</b> <span class="product-size">{{object.size}}</span></p>
                     <div class="colors">
-                        <p>Colors available : {{object.lens_color}}
+                        <p><b>Colors available </b>: {{object.lens_color}}
                         </p>
                         
                         <!-- <button style="background-color: black; padding: 16px;border: none;"></button>
@@ -41,16 +41,17 @@
                 </div>  
                 <hr>
                 <div class="price">
-                    <p>Total :Rs. {% if object.include_offer %}{{object.discount_price}}{% else%}{{object.price}}{% endif %}</p>
-                    <div class="buttonGroup1 w-100">
-                        <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart" class="btn btn-lng w-100">
-                            Add to cart
-                        </button></a>
-                        
-                        <!-- <a href="{% url 'buy-now' object.id %}"><button id="d-buynow">
-                            Buy Now 
-                        </button></a> -->
-                    </div>
+                    <p><b>Total </b>:Rs. {% if object.include_offer %}{{object.discount_price}}{% else%}{{object.price}}{% endif %}</p>
+                    
+                </div>
+                <div class="buttonGroup1 w-100">
+                    <a href="{% url 'add-to-cart' object.id %}"><button id="d-cart" class="btn btn-lng">
+                        Add to cart <i class='fa fa-shopping-cart'></i>
+                    </button></a>
+                    
+                    <a href="{% url 'wishlist' object.id%}"><button id="d-buynow">
+                        Wishlist <i class="fa fa-heart-o"></i>
+                    </button></a>
                 </div>
                 <div class="shipping">
                     <p>FREE SHIPPING AVAILABLE!!</p>
@@ -109,10 +110,10 @@
     {% endfor %}
     <div class="container-fluid d-flex justify-content-center flex-column align-items-center pb-5 mb-5">
         <h1 class="d-related-products">You may also like</h1>
-        <div class="d-product-list d-flex">
+        <div class="d-product-list w-100 d-flex justify-content-center">
             {% for p in products%}
                 {% for product in p%}
-                <a href="{% url 'product-detail' product.slug%}">
+                    <a href="{% url 'product-detail' product.slug%}">
                     <div class="one" >
                         <img src="{{product.upper_img}}">
                         <div class="details">

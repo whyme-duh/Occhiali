@@ -31,6 +31,9 @@ urlpatterns = [
     path('register/', user_views.register, name = 'register'),
     path('edit-profile/', user_views.editprofile, name = 'edit-profile'),
     path('myorder/', user_views.myorder, name = 'myorder'),
+    path('wishlist/<int:id>/', user_views.wishlist, name = 'wishlist'),
+    path('mywishlist/', user_views.mywishlist, name = 'mywishlist'),
+    path('remove_wishlist/<int:id>', user_views.remove_wishlist, name = 'remove_wishlist'),
     
     
 ]

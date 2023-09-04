@@ -40,7 +40,7 @@
                   </div>
                  
                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 ">
-                    <h5 class="mb-0" style="font-size: 1em;font-weight: 800;">Rs. {{value.product.price}}</h5>
+                    <h5 class="mb-0" style="font-size: 0.95em;font-weight: 800;">Rs. {{value.product.price}}</h5>
                   </div>
                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
   
@@ -68,7 +68,7 @@
                            <h5 >{{value.product.name}}</h5>
       
                           </a>
-                          <p>Rs. {{value.product.price}}</p>
+                          <p>Rs.{{value.product.price}}</p>
                           
                       </div>
                   </div>
@@ -81,10 +81,10 @@
                   <div class="delivery d-flex justify-content-between">
                       <p>Delivery : </p> <p>{{delivery_cost}} </p>
                   </div>
-                  <div class="discount d-flex justify-content-between">
+                  <!-- <div class="discount d-flex justify-content-between">
                       <p>Discount : </p> <p>{{discount}} </p>
       
-                  </div>
+                  </div> -->
                   <div class="total d-flex justify-content-between">
                       <h5>Total : </h5><h5>Rs. {{totalprice}}</h5>
       
@@ -92,13 +92,13 @@
                   </div>
                   <small>Note: Billing address will be able to form after payment.</small>
 
-                <div class="payment-btns d-flex justify-content-between">
+                <div class="payment-btns d-flex justify-content-center">
                   <a href="{% url 'initiate_payment' %}">
                     <button   class="btn  btn-lg mt-3 w-100 m-2" style="background-color: #5E338D;color: white;" > Pay With Khalti</button>
                   </a>
-                  <a href="{% url 'esewa_payment' %}">
-                    <button   class="btn  btn-lg mt-3 w-100m-2" style="background-color: #59c352;color: white;" > Pay With Esewa</button>
-                  </a>
+                  <!-- <a href="{% url 'esewa_payment' %}">
+                    <button   class="btn  btn-lg mt-3 w-100 m-2" style="background-color: #59c352;color: white;" > Pay With Esewa</button>
+                  </a> -->
                 </div>
               </div>
              

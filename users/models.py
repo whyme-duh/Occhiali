@@ -33,3 +33,11 @@ class BillingAdress(models.Model):
 
     def __str__(self):
         return self.first_name
+    
+
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default = True )
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, default=True)
+
+    def __str__(self):
+        return self.product.name

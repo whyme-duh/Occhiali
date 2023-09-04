@@ -1,11 +1,12 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from . forms import UserRegisterForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from ecomWeb.forms import BillingAddressForm
 from . forms import BillingModelForm, UpdateProfile, UpdateUser
-from . models import BillingAdress
-from ecomWeb.models import Order, OrderItem
+from . models import BillingAdress, Wishlist
+from ecomWeb.models import Order, OrderItem,Product
 # Create your views here.
 
 @login_required(login_url = 'login')
@@ -78,3 +79,33 @@ def myorder(request):
     return render(request, 'users/profile/order.html', {"orders" : Order.objects.filter(user = request.user).order_by('id'), 'orderitems' : OrderItem.objects.all() })
 
 
+def wishlist(request, id):
+    product = Product.objects.get(id = id)
+    user = request.user
+    if request.user.is_authenticated:
+        if product.include_offer:
+            product.price = product.discount_price
+            product.save()
+            Wishlist.objects.get_or_create(user = user, product = product)
+
+        else:
+            Wishlist.objects.get_or_create(user = user, product = product)
+
+        messages.success(request, "Added to Wishlist!")
+    else: 
+        messages.error(request, f"You have to login in order to add items in cart.")
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def mywishlist(request):
+    user = request.user
+    return render(request, 'users/profile/wishlist.html', {'wishlists' : Wishlist.objects.filter(user= user)})
+
+def remove_wishlist(request, id):
+    try:
+        wishlist = Wishlist.objects.get(id = id)
+        wishlist.delete()
+    except Exception as e:
+        print(e)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
